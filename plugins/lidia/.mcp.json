@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "lidia": {
+      "type": "http",
+      "url": "https://lidia.centrolemann.org.br/api/mcp/lidia"
+    }
+  }
+}

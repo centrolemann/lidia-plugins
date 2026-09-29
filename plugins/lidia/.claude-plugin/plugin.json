@@ -1,0 +1,22 @@
+{
+  "name": "lidia",
+  "displayName": "LidIA",
+  "version": "0.2.0",
+  "description": "Consulte a LidIA, a assistente do Centro Lemann para dados da educação pública brasileira (IDEB, SAEB, Censo Escolar e mais), e receba a resposta com gráficos e o link para continuar a conversa na LidIA.",
+  "author": {
+    "name": "Centro Lemann",
+    "email": "sistemas@centrolemann.org.br",
+    "url": "https://lidia.centrolemann.org.br"
+  },
+  "homepage": "https://lidia.centrolemann.org.br",
+  "repository": "https://github.com/centrolemann/lidia-plugins",
+  "license": "MIT",
+  "keywords": [
+    "educacao",
+    "brasil",
+    "ideb",
+    "saeb",
+    "censo-escolar",
+    "dados-educacionais"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "lidia-plugins",
+  "owner": {
+    "name": "Centro Lemann",
+    "email": "sistemas@centrolemann.org.br",
+    "url": "https://lidia.centrolemann.org.br"
+  },
+  "description": "Plugins oficiais da LidIA, a assistente do Centro Lemann para dados da educação pública brasileira.",
+  "plugins": [
+    {
+      "name": "lidia",
+      "source": "./plugins/lidia",
+      "category": "education"
+    },
+    {
+      "name": "lidia-admin",
+      "source": "./plugins/lidia-admin",
+      "category": "education",
+      "description": "Ferramentas de análise de dados da LidIA. Requer conta de administrador da LidIA. Instala junto o plugin lidia."
+    }
+  ]
+}

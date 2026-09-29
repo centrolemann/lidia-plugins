@@ -1,0 +1,43 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "lidia",
+  "version": "0.2.0",
+  "description": "Consulte a LidIA, a assistente do Centro Lemann para dados da educação pública brasileira (IDEB, SAEB, Censo Escolar e mais), e receba a resposta com gráficos e o link para continuar a conversa na LidIA.",
+  "author": {
+    "name": "Centro Lemann",
+    "email": "sistemas@centrolemann.org.br",
+    "url": "https://lidia.centrolemann.org.br"
+  },
+  "homepage": "https://lidia.centrolemann.org.br",
+  "repository": "https://github.com/centrolemann/lidia-plugins",
+  "license": "MIT",
+  "keywords": [
+    "educacao",
+    "brasil",
+    "ideb",
+    "saeb",
+    "censo-escolar",
+    "dados-educacionais"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "LidIA",
+        "shortDescription": "Dados da educação pública brasileira",
+        "longDescription": "Consulte a LidIA, a assistente do Centro Lemann para dados da educação pública brasileira (IDEB, SAEB, Censo Escolar e mais), e receba a resposta com gráficos e o link para continuar a conversa na LidIA. Cada consulta fica salva no seu histórico da LidIA. Os gráficos chegam como links de imagem.",
+        "developerName": "Centro Lemann",
+        "category": "Education & Research",
+        "capabilities": ["Interactive"],
+        "websiteURL": "https://lidia.centrolemann.org.br",
+        "supportURL": "mailto:sistemas@centrolemann.org.br",
+        "privacyPolicyURL": "https://lidia.centrolemann.org.br/privacidade",
+        "defaultPrompt": [
+          "Como evoluiu o IDEB dos anos iniciais em Sobral desde 2015?",
+          "Compare a proficiência em matemática no SAEB entre as capitais do Nordeste",
+          "Quantas matrículas em tempo integral a rede estadual de Pernambuco tem hoje?"
+        ],
+        "logo": "./assets/logo.png"
+      }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "lidia-admin",
+  "version": "0.2.0",
+  "description": "Ferramentas de análise de dados da LidIA: banco do aplicativo e bases da educação brasileira, com SQL somente leitura. Requer conta de administrador da LidIA. Instale também o plugin lidia.",
+  "author": {
+    "name": "Centro Lemann",
+    "email": "sistemas@centrolemann.org.br",
+    "url": "https://lidia.centrolemann.org.br"
+  },
+  "homepage": "https://lidia.centrolemann.org.br",
+  "repository": "https://github.com/centrolemann/lidia-plugins",
+  "license": "MIT",
+  "keywords": [
+    "educacao",
+    "brasil",
+    "lidia",
+    "sql",
+    "bigquery",
+    "analise-de-dados",
+    "admin"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "LidIA Admin",
+        "shortDescription": "Análise de dados da LidIA (requer conta de administrador da LidIA)",
+        "longDescription": "Ferramentas de análise de dados da LidIA: banco do aplicativo e bases da educação brasileira, com SQL somente leitura. Requer conta de administrador da LidIA. Instale também o plugin lidia. Pessoas sem perfil de administrador conseguem conectar, mas cada ferramenta responde que é exclusiva para administradores.",
+        "developerName": "Centro Lemann",
+        "category": "Education & Research",
+        "capabilities": ["Interactive"],
+        "websiteURL": "https://lidia.centrolemann.org.br",
+        "supportURL": "mailto:sistemas@centrolemann.org.br",
+        "privacyPolicyURL": "https://lidia.centrolemann.org.br/privacidade",
+        "defaultPrompt": [
+          "Quantas pessoas usaram a LidIA em pelo menos dois dias na última semana?",
+          "Quais municípios dos usuários ativos têm o menor IDEB dos anos finais?"
+        ],
+        "logo": "./assets/logo.png"
+      }
+    }
+  }
+}

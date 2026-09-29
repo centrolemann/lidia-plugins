@@ -1,0 +1,32 @@
+{
+  "name": "lidia-plugins",
+  "interface": {
+    "displayName": "LidIA (Centro Lemann)"
+  },
+  "plugins": [
+    {
+      "name": "lidia",
+      "source": {
+        "source": "local",
+        "path": "./plugins/lidia"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Education & Research"
+    },
+    {
+      "name": "lidia-admin",
+      "source": {
+        "source": "local",
+        "path": "./plugins/lidia-admin"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Education & Research"
+    }
+  ]
+}
