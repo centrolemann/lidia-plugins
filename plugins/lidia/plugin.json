@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "lidia",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Consulte a LidIA, a assistente do Centro Lemann para dados da educação pública brasileira (IDEB, SAEB, Censo Escolar e mais), e receba a resposta com gráficos e o link para continuar a conversa na LidIA.",
   "author": {
     "name": "Centro Lemann",
@@ -48,7 +48,7 @@
             "description": "Consulte a LidIA, a assistente do Centro Lemann para dados da educação pública brasileira (IDEB, SAEB, Censo Escolar e mais), e receba a resposta com gráficos e o link para continuar a conversa na LidIA. Cada consulta fica salva no seu histórico da LidIA. Os gráficos chegam como links de imagem."
           }
         },
-        "release_notes": "Adds the privacy policy URL to the native Claude manifest. Initial directory availability is Brazil. Includes the standalone README with setup, examples, and privacy information. Skills, tools, authentication, and production endpoints are unchanged."
+        "release_notes": "Adds privacy, support, documentation, and terms links to the native Claude manifest. Initial directory availability is Brazil. Includes the standalone README with setup, examples, and privacy information. Skills, tools, authentication, and production endpoints are unchanged."
       },
       "review": {
         "test_cases": {
