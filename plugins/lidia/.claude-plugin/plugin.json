@@ -1,7 +1,7 @@
 {
   "name": "lidia",
   "displayName": "LidIA",
-  "version": "0.2.0",
+  "version": "0.4.2",
   "description": "Consulte a LidIA, a assistente do Centro Lemann para dados da educação pública brasileira (IDEB, SAEB, Censo Escolar e mais), e receba a resposta com gráficos e o link para continuar a conversa na LidIA.",
   "author": {
     "name": "Centro Lemann",

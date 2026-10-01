@@ -7,7 +7,7 @@ Este repositório é um marketplace com dois plugins:
 | Plugin                               | Para quem                              | O que faz                                                                                                                                 |
 | ------------------------------------ | -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
 | [`lidia`](plugins/lidia)             | Qualquer pessoa com conta na LidIA     | Pergunte sobre IDEB, SAEB, Censo Escolar, matrículas, aprendizagem ou fluxo escolar e receba a análise com gráficos e o link da conversa. |
-| [`lidia-admin`](plugins/lidia-admin) | Requer conta de administrador da LidIA | Consultas SQL somente leitura ao banco do aplicativo e às bases da educação brasileira. Depende do plugin `lidia`.                        |
+| [`lidia-admin`](plugins/lidia-admin) | Requer conta de administrador da LidIA | Consultas SQL somente leitura ao banco do aplicativo e às bases da educação brasileira. Funciona de forma independente.                   |
 
 ## Instalação
 
@@ -16,10 +16,10 @@ Este repositório é um marketplace com dois plugins:
 ```
 /plugin marketplace add centrolemann/lidia-plugins
 /plugin install lidia@lidia-plugins
-/plugin install lidia-admin@lidia-plugins   # só administradores; instala o lidia junto
+/plugin install lidia-admin@lidia-plugins   # só administradores
 ```
 
-**ChatGPT e outros clientes:** instale `lidia`. Se você for administrador, **instale os dois**, `lidia` e `lidia-admin`: nem todo cliente instala dependências automaticamente.
+**ChatGPT e outros clientes:** instale `lidia`. Se você for administrador, instale `lidia-admin`. Cada plugin funciona de forma independente.
 
 Ao conectar, o login é feito na própria LidIA, via OAuth. Se ainda não tiver conta, você pode criá-la nesse momento.
 
@@ -38,7 +38,7 @@ Skill: **`consultar-dados-educacionais`**, que ensina o modelo a enviar a pergun
 
 ### `lidia-admin`: `https://lidia.centrolemann.org.br/api/mcp/admin`
 
-Requer conta de administrador da LidIA. Outras contas conseguem conectar, mas cada chamada responde "Esta ferramenta é exclusiva para administradores da LidIA."
+Requer conta de administrador da LidIA. Contas de revisão explicitamente autorizadas recebem somente dados sintéticos do aplicativo em um esquema isolado. Outras contas conseguem conectar, mas cada chamada responde "Esta ferramenta é exclusiva para administradores da LidIA."
 
 Banco do aplicativo LidIA (Postgres, somente leitura):
 
@@ -55,7 +55,7 @@ Bases da educação brasileira (BigQuery, somente leitura):
 - `query_brazilian_education_data`
 - `preview_brazilian_education_table`
 
-Também expõe o prompt `data_analyst_guide` e o recurso `lidia-data-mcp://guide`.
+Como documentação opcional, também expõe o prompt `data_analyst_guide` e o recurso `lidia-data-mcp://guide`.
 
 Skill: **`analisar-dados-lidia`**, que orienta a escolha da fonte certa e as armadilhas das métricas.
 
@@ -69,9 +69,10 @@ Gráficos: no ChatGPT, os gráficos aparecem como links para a imagem. No Claude
 
 ## Dados enviados e recebidos
 
-- **Enviado à LidIA:** apenas a pergunta que você fez e, em perguntas de acompanhamento, o identificador da conversa. No `lidia-admin`, também as consultas SQL. Nada é enviado a outros serviços.
+- **Enviado à LidIA:** apenas a pergunta que você fez e, em perguntas de acompanhamento, o identificador da conversa. No `lidia-admin`, também as consultas SQL. O texto SQL e o dialeto são enviados ao Jev (TypeSafe AI), via Vercel AI Gateway, para verificar efeitos antes da execução; essa verificação não envia as linhas retornadas pelo banco. A LidIA usa os operadores descritos na política de privacidade, incluindo modelos de IA via Vercel AI Gateway, Clerk, Supabase e Google BigQuery. O assistente em que você instalou o plugin recebe as respostas e os resultados das consultas.
 - **Recebido da LidIA:** o texto da resposta, os gráficos (imagem PNG, com os dados usados) e o link da conversa; no `lidia-admin`, as linhas retornadas pelas consultas.
 - As conversas ficam salvas na sua conta da LidIA, como as conversas feitas no aplicativo.
+- A auditoria das ferramentas registra identificador da conta, ferramenta, duração, estado e resumos técnicos dos argumentos, sem guardar o SQL ou a pergunta nesse registro. As conversas continuam salvas no histórico.
 - Existe um limite diário de novas conversas por conta.
 
 ## Privacidade
@@ -85,6 +86,7 @@ A LidIA trata os dados segundo a LGPD. Guardamos as perguntas e respostas na sua
 .agents/plugins/marketplace.json  # marketplace de clientes OpenAI
 plugins/<plugin>/
   plugin.json                     # Agent Plugins 1.0 (+ extensions.com.openai)
+  README.md                       # descrição, configuração e privacidade do plugin
   mcp.json                        # Agent Plugins 1.0 (streamable-http)
   .claude-plugin/plugin.json      # manifesto nativo do Claude
   .mcp.json                       # MCP nativo do Claude (http)
@@ -97,7 +99,9 @@ Este repositório é um espelho somente leitura, publicado pelo Centro Lemann, e
 
 ## Suporte
 
-Dúvidas ou problemas: sistemas@centrolemann.org.br
+Dúvidas ou problemas: https://lidia.centrolemann.org.br/suporte
+
+Termos: https://lidia.centrolemann.org.br/termos
 
 ## Licença
 

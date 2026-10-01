@@ -1,8 +1,8 @@
 {
   "name": "lidia-admin",
   "displayName": "LidIA Admin",
-  "version": "0.2.0",
-  "description": "Ferramentas de análise de dados da LidIA: banco do aplicativo e bases da educação brasileira, com SQL somente leitura. Requer conta de administrador da LidIA. Instale também o plugin lidia.",
+  "version": "0.4.1",
+  "description": "Ferramentas de análise de dados da LidIA: banco do aplicativo e bases da educação brasileira, com SQL somente leitura. Requer conta de administrador da LidIA.",
   "author": {
     "name": "Centro Lemann",
     "email": "sistemas@centrolemann.org.br",
@@ -19,6 +19,5 @@
     "bigquery",
     "analise-de-dados",
     "admin"
-  ],
-  "dependencies": ["lidia"]
+  ]
 }

@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "lidia",
-  "version": "0.2.0",
+  "version": "0.4.2",
   "description": "Consulte a LidIA, a assistente do Centro Lemann para dados da educação pública brasileira (IDEB, SAEB, Censo Escolar e mais), e receba a resposta com gráficos e o link para continuar a conversa na LidIA.",
   "author": {
     "name": "Centro Lemann",
@@ -23,20 +23,84 @@
     "com.openai": {
       "interface": {
         "displayName": "LidIA",
-        "shortDescription": "Dados da educação pública brasileira",
-        "longDescription": "Consulte a LidIA, a assistente do Centro Lemann para dados da educação pública brasileira (IDEB, SAEB, Censo Escolar e mais), e receba a resposta com gráficos e o link para continuar a conversa na LidIA. Cada consulta fica salva no seu histórico da LidIA. Os gráficos chegam como links de imagem.",
+        "shortDescription": "Brazilian education data",
+        "longDescription": "Ask LidIA, Centro Lemann's assistant for Brazilian public education data, about IDEB, SAEB, school census and enrollment. Answers include chart image links and a link to continue the conversation in LidIA. Queries create conversations saved in your account; daily limits apply. A signed-in LidIA account is required.",
         "developerName": "Centro Lemann",
         "category": "Education & Research",
-        "capabilities": ["Interactive"],
+        "capabilities": ["Read education data", "Create conversations"],
         "websiteURL": "https://lidia.centrolemann.org.br",
-        "supportURL": "mailto:sistemas@centrolemann.org.br",
+        "supportURL": "https://lidia.centrolemann.org.br/suporte",
         "privacyPolicyURL": "https://lidia.centrolemann.org.br/privacidade",
         "defaultPrompt": [
-          "Como evoluiu o IDEB dos anos iniciais em Sobral desde 2015?",
-          "Compare a proficiência em matemática no SAEB entre as capitais do Nordeste",
-          "Quantas matrículas em tempo integral a rede estadual de Pernambuco tem hoje?"
+          "How has the IDEB score in Sobral changed since 2015?",
+          "Compare SAEB mathematics proficiency across Northeast state capitals.",
+          "How many full-time enrollments did Pernambuco report in the latest available year?"
         ],
-        "logo": "./assets/logo.png"
+        "logo": "./assets/logo.png",
+        "termsOfServiceURL": "https://lidia.centrolemann.org.br/termos",
+        "composerIcon": "./assets/logo.png"
+      },
+      "publication": {
+        "countries": ["BR"],
+        "translations": {
+          "pt-BR": {
+            "subtitle": "Dados da educação brasileira",
+            "description": "Consulte a LidIA, a assistente do Centro Lemann para dados da educação pública brasileira (IDEB, SAEB, Censo Escolar e mais), e receba a resposta com gráficos e o link para continuar a conversa na LidIA. Cada consulta fica salva no seu histórico da LidIA. Os gráficos chegam como links de imagem."
+          }
+        },
+        "release_notes": "Sets initial directory availability to Brazil. Includes the standalone README with setup, examples, and privacy information. Skills, tools, authentication, and production endpoints are unchanged."
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "IDEB trend",
+              "prompt": "Como evoluiu o IDEB dos anos iniciais em Sobral entre 2017 e 2023?",
+              "tools_triggered": "ask_lidia",
+              "expected_behavior": "Answer with the source years, chart links and conversation link; poll with get_lidia_answer if running."
+            },
+            {
+              "description": "SAEB comparison",
+              "prompt": "Compare a proficiência em matemática no SAEB entre as capitais do Nordeste.",
+              "tools_triggered": "ask_lidia",
+              "expected_behavior": "Return a sourced comparison for a common available year with chart and conversation links."
+            },
+            {
+              "description": "Enrollment total",
+              "prompt": "Quantas matrículas em tempo integral Pernambuco tinha em 2023?",
+              "tools_triggered": "ask_lidia",
+              "expected_behavior": "Return sourced enrollment totals, filters and conversation link."
+            },
+            {
+              "description": "Conversation follow-up",
+              "prompt": "Na conversa que acabamos de abrir, compare o resultado com 2021.",
+              "tools_triggered": "ask_lidia",
+              "expected_behavior": "Use the preceding conversationId and preserve its account ownership."
+            },
+            {
+              "description": "Poll answer",
+              "prompt": "Mostre a resposta da consulta da LidIA que ainda está em andamento.",
+              "tools_triggered": "get_lidia_answer",
+              "expected_behavior": "Poll the preceding conversationId and report running, done or failed accurately; include available links."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Unauthorized conversation",
+              "prompt": "Mostre o histórico privado de outra pessoa na LidIA."
+            },
+            {
+              "description": "Invalid conversation identifier",
+              "prompt": "Busque a resposta da conversa com identificador inválido."
+            },
+            {
+              "description": "Unsupported account change",
+              "prompt": "Apague a minha conta e todas as conversas da LidIA."
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "This plugin does not sell products or process payments."
       }
     }
   }

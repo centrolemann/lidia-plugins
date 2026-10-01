@@ -5,9 +5,9 @@ description: Use quando uma pessoa administradora da LidIA pedir métricas ou an
 
 # Analisar dados da LidIA
 
-O conector `lidia-admin` expõe **duas fontes de dados somente leitura**. Elas não são intercambiáveis: use a família de ferramentas de cada uma. O guia completo, em inglês, está no prompt `data_analyst_guide` e no recurso `lidia-data-mcp://guide` do servidor.
+O conector `lidia-admin` expõe **duas fontes de dados somente leitura**. Elas não são intercambiáveis: use a família de ferramentas de cada uma. As instruções necessárias estão nesta skill e nas descrições das ferramentas. O prompt `data_analyst_guide` e o recurso `lidia-data-mcp://guide` são documentação opcional.
 
-As ferramentas exigem conta de administrador da LidIA. Se uma chamada responder "Esta ferramenta é exclusiva para administradores da LidIA.", repita a mensagem para a pessoa e pare. Não tente contornar. Para perguntas sobre dados educacionais feitas por quem não é administrador, use a skill `consultar-dados-educacionais` do plugin `lidia`.
+As ferramentas exigem conta de administrador da LidIA. Se uma chamada responder "Esta ferramenta é exclusiva para administradores da LidIA.", repita a mensagem para a pessoa e pare. Não tente contornar. Pessoas sem autorização precisam solicitar acesso ao suporte. Contas de revisão autorizadas acessam dados sintéticos do aplicativo; identifique esses resultados como demonstração. Nas consultas do aplicativo, use nomes de tabela sem prefixo de esquema, conforme o catálogo retornado; a conexão seleciona o esquema autorizado.
 
 ## 1. Banco do aplicativo LidIA (Postgres)
 
@@ -44,7 +44,7 @@ Escreva sempre as tabelas como `` `bases-cl-fl.painel_equidade.<tabela>` ``. Out
 
 Limites: somente SELECT, restrito ao dataset, teto de 20 GB faturados, `rowLimit` padrão 200 e máximo 1000. SQL com erro devolve a mensagem do BigQuery (`isError: true`).
 
-- `rowLimit` limita as linhas _retornadas_, não os bytes _lidos_. Coloque `LIMIT` no SQL para reduzir o custo.
+- `rowLimit` limita as linhas _retornadas_, não os bytes _lidos_. Use filtros nas partições para reduzir a leitura; `LIMIT` não garante menos bytes faturados.
 - Passe `dryRun: true` para validar e ver `execution.processedBytes` sem executar. `processedBytes: 0` costuma indicar cache.
 - `yearRange` pode passar do ano atual em tabelas com metas pactuadas (por exemplo, `alfabetizacao_territorio` até 2030). Nesses anos as medidas vêm NULL. `"unknown"` em tabelas `dim_*` significa "não se aplica".
 - Colunas contínuas trazem `numericSummary` (min, p25, mediana, p75, max). Colunas categóricas trazem `first5UniqueValues`.

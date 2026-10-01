@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "lidia-admin",
-  "version": "0.2.0",
-  "description": "Ferramentas de análise de dados da LidIA: banco do aplicativo e bases da educação brasileira, com SQL somente leitura. Requer conta de administrador da LidIA. Instale também o plugin lidia.",
+  "version": "0.4.1",
+  "description": "Ferramentas de análise de dados da LidIA: banco do aplicativo e bases da educação brasileira, com SQL somente leitura. Requer conta de administrador da LidIA.",
   "author": {
     "name": "Centro Lemann",
     "email": "sistemas@centrolemann.org.br",
@@ -24,19 +24,82 @@
     "com.openai": {
       "interface": {
         "displayName": "LidIA Admin",
-        "shortDescription": "Análise de dados da LidIA (requer conta de administrador da LidIA)",
-        "longDescription": "Ferramentas de análise de dados da LidIA: banco do aplicativo e bases da educação brasileira, com SQL somente leitura. Requer conta de administrador da LidIA. Instale também o plugin lidia. Pessoas sem perfil de administrador conseguem conectar, mas cada ferramenta responde que é exclusiva para administradores.",
+        "shortDescription": "Read-only data for admins",
+        "longDescription": "Read-only analysis of LidIA application data in PostgreSQL and Brazilian education data in a fixed BigQuery dataset. A LidIA administrator account is required. Other accounts can connect, but tools deny unauthorized calls. Approved review accounts see isolated synthetic application tables. Authorized administrators can receive raw query rows; those rows are shared with the connected assistant. This plugin works independently.",
         "developerName": "Centro Lemann",
         "category": "Education & Research",
-        "capabilities": ["Interactive"],
+        "capabilities": ["Read application data", "Read education data"],
         "websiteURL": "https://lidia.centrolemann.org.br",
-        "supportURL": "mailto:sistemas@centrolemann.org.br",
+        "supportURL": "https://lidia.centrolemann.org.br/suporte",
         "privacyPolicyURL": "https://lidia.centrolemann.org.br/privacidade",
         "defaultPrompt": [
-          "Quantas pessoas usaram a LidIA em pelo menos dois dias na última semana?",
-          "Quais municípios dos usuários ativos têm o menor IDEB dos anos finais?"
+          "How many non-deleted conversations exist in the sample database?",
+          "Show the application schema, then count users by municipality."
         ],
-        "logo": "./assets/logo.png"
+        "logo": "./assets/logo.png",
+        "termsOfServiceURL": "https://lidia.centrolemann.org.br/termos",
+        "composerIcon": "./assets/logo.png"
+      },
+      "publication": {
+        "translations": {
+          "pt-BR": {
+            "subtitle": "Análise de dados para admins",
+            "description": "Ferramentas de análise de dados da LidIA: banco do aplicativo e bases da educação brasileira, com SQL somente leitura. Requer conta de administrador da LidIA. Pessoas sem perfil de administrador conseguem conectar, mas cada ferramenta responde que é exclusiva para administradores. Contas de revisão autorizadas acessam somente tabelas sintéticas do aplicativo em um esquema isolado."
+          }
+        },
+        "release_notes": "Adds a standalone README with setup, examples, and privacy information inside each plugin folder for directory review. Retains Jev SQL effect validation, native database enforcement, and synthetic reviewer isolation."
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Application schema",
+              "prompt": "Mostre o esquema completo do banco de demonstração da LidIA.",
+              "tools_triggered": "get_lidia_app_schema",
+              "expected_behavior": "Return the isolated synthetic catalog with dataScope=review."
+            },
+            {
+              "description": "List and describe tables",
+              "prompt": "Liste as tabelas do aplicativo e descreva users.",
+              "tools_triggered": "list_lidia_app_tables, describe_lidia_app_tables",
+              "expected_behavior": "Return the synthetic users table columns only, with review provenance."
+            },
+            {
+              "description": "Preview sample data",
+              "prompt": "Mostre 2 linhas de chat_sessions do banco de demonstração.",
+              "tools_triggered": "preview_lidia_app_table",
+              "expected_behavior": "Return up to 2 synthetic rows and review provenance."
+            },
+            {
+              "description": "Read-only SQL",
+              "prompt": "Quantas conversas não excluídas existem no banco de demonstração?",
+              "tools_triggered": "query_lidia_app_data",
+              "expected_behavior": "SELECT COUNT(*) FROM chat_sessions WHERE NOT is_deleted returns 2 in the prepared fixture."
+            },
+            {
+              "description": "Public education query",
+              "prompt": "Liste as tabelas educacionais, descreva ideb_territorio e consulte uma amostra de 2023.",
+              "tools_triggered": "list_brazilian_education_tables, describe_brazilian_education_tables, query_brazilian_education_data",
+              "expected_behavior": "Return public education data from bases-cl-fl.painel_equidade with source and year filters."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Unauthorized administrator access",
+              "prompt": "Use uma conta normal não autorizada para consultar os dados do aplicativo."
+            },
+            {
+              "description": "Write rejection",
+              "prompt": "Execute DELETE FROM public.users no banco do aplicativo."
+            },
+            {
+              "description": "Outside dataset",
+              "prompt": "Consulte SELECT * FROM `other.dataset.table` nas ferramentas educacionais."
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "This plugin does not sell products or process payments."
       }
     }
   }
