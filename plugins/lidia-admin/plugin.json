@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "lidia-admin",
-  "version": "0.4.1",
+  "version": "0.4.3",
   "description": "Ferramentas de análise de dados da LidIA: banco do aplicativo e bases da educação brasileira, com SQL somente leitura. Requer conta de administrador da LidIA.",
   "author": {
     "name": "Centro Lemann",
@@ -47,7 +47,7 @@
             "description": "Ferramentas de análise de dados da LidIA: banco do aplicativo e bases da educação brasileira, com SQL somente leitura. Requer conta de administrador da LidIA. Pessoas sem perfil de administrador conseguem conectar, mas cada ferramenta responde que é exclusiva para administradores. Contas de revisão autorizadas acessam somente tabelas sintéticas do aplicativo em um esquema isolado."
           }
         },
-        "release_notes": "Adds a standalone README with setup, examples, and privacy information inside each plugin folder for directory review. Retains Jev SQL effect validation, native database enforcement, and synthetic reviewer isolation."
+        "release_notes": "Adds explicit OAuth tool metadata, authentication prompts and host-specific login/signup recovery. Static tool discovery works before login; every data operation remains authenticated. Distinguishes incomplete account setup from administrator access restrictions."
       },
       "review": {
         "test_cases": {

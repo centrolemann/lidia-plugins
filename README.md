@@ -21,7 +21,9 @@ Este repositório é um marketplace com dois plugins:
 
 **ChatGPT e outros clientes:** instale `lidia`. Se você for administrador, instale `lidia-admin`. Cada plugin funciona de forma independente.
 
-Ao conectar, o login é feito na própria LidIA, via OAuth. Se ainda não tiver conta, você pode criá-la nesse momento.
+Ao conectar, o login é feito na própria LidIA, via OAuth. Se ainda não tiver conta, [crie uma conta](https://lidia.centrolemann.org.br/sign-up). Instalar o plugin ou entrar no site não autoriza o conector automaticamente: volte ao assistente e conecte sua conta.
+
+Para recuperar a conexão no ChatGPT, Codex ou Claude web/desktop/Code, siga os passos de autenticação no [README do LidIA](plugins/lidia/README.md#se-o-conector-pedir-autenticação) ou no [README do LidIA Admin](plugins/lidia-admin/README.md#se-o-conector-pedir-autenticação). O plugin Admin recebe a mesma melhoria de login, mas continua exigindo permissão de administrador.
 
 ## Servidores e ferramentas
 
@@ -63,9 +65,9 @@ Skill: **`analisar-dados-lidia`**, que orienta a escolha da fonte certa e as arm
 
 1. Instale o plugin e conecte sua conta da LidIA.
 2. Peça, por exemplo: _"Como evoluiu o IDEB dos anos iniciais em Sobral desde 2015?"_
-3. Você recebe os achados, os gráficos e o link da conversa. Cada consulta fica salva no seu histórico da LidIA.
+3. O assistente consulta os dados, tenta mostrar um gráfico relevante com suas próprias ferramentas quando disponíveis, explica os achados e termina com o link da conversa. Cada consulta fica salva no seu histórico da LidIA.
 
-Gráficos: no ChatGPT, os gráficos aparecem como links para a imagem. No Claude, a imagem também pode ser exibida na conversa. Em todos os casos, a resposta lista o título e o link de cada gráfico.
+Gráficos: a LidIA retorna imagens e os dados usados. A skill orienta o assistente a recriar os gráficos relevantes quando seu ambiente tiver ferramentas de visualização. Se isso não for possível, ele exibe a imagem quando suportada ou oferece o link. Em todos os casos, a resposta lista o título e o link de cada gráfico. A skill do LidIA Admin também recomenda visualizar os resultados SQL quando isso ajudar a análise.
 
 ## Dados enviados e recebidos
 

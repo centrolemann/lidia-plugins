@@ -9,6 +9,21 @@ O conector `lidia-admin` expõe **duas fontes de dados somente leitura**. Elas n
 
 As ferramentas exigem conta de administrador da LidIA. Se uma chamada responder "Esta ferramenta é exclusiva para administradores da LidIA.", repita a mensagem para a pessoa e pare. Não tente contornar. Pessoas sem autorização precisam solicitar acesso ao suporte. Contas de revisão autorizadas acessam dados sintéticos do aplicativo; identifique esses resultados como demonstração. Nas consultas do aplicativo, use nomes de tabela sem prefixo de esquema, conforme o catálogo retornado; a conexão seleciona o esquema autorizado.
 
+## Autenticação e conexão
+
+Este conector exige uma conta LidIA conectada por OAuth. Instalar o plugin ou entrar no site não autoriza o conector automaticamente.
+
+- Se houver `authentication_required`, HTTP 401, uma solicitação de autenticação do host ou uma falha explícita de credenciais, diga que o conector `lidia-admin` precisa ser autenticado. Use a opção nativa Conectar/Autenticar quando disponível e explique que a pessoa deve concluir o login e consentimento no navegador.
+- **ChatGPT web/desktop:** use Conectar/Autenticar no plugin. Se o cartão de conexão não aparecer no chat, abra os detalhes do plugin e conecte a conta.
+- **Codex:** veja o nome efetivo do servidor em `/mcp` ou `codex mcp list`; ele pode ter um prefixo do plugin. Use `codex mcp login <nome-do-servidor>` com esse nome, ou a opção de autenticação do plugin. Não invente o nome registrado.
+- **Claude Code:** abra `/mcp`, selecione o servidor e autentique; alternativamente, use `claude mcp login <nome-do-servidor>` com o nome efetivo mostrado pelo host.
+- **Claude web/desktop:** abra Customize → Connectors, encontre o conector e clique Connect. Na configuração, a opção “Sign in when needed” permite solicitar login quando necessário. Em uma organização, uma pessoa administradora precisa disponibilizar o conector primeiro; cada pessoa conecta a própria conta.
+- Se não houver conta, ofereça [criar uma conta LidIA](https://lidia.centrolemann.org.br/sign-up). Para uma conta existente, ofereça [entrar na LidIA](https://lidia.centrolemann.org.br/sign-in). Depois, a pessoa deve voltar e autorizar o conector neste assistente. Nunca peça senha, código de login ou token no chat.
+- Se houver `account_setup_required` ou “Sua conta LidIA ainda não está pronta”, a autenticação já ocorreu: peça para concluir o cadastro no site com o mesmo login. Se persistir, indique [suporte](https://lidia.centrolemann.org.br/suporte). Não repita OAuth em um ciclo.
+- Se houver `admin_required` ou acesso exclusivo para administradores, indique o suporte para solicitar essa permissão. Criar uma conta ou entrar novamente não concede perfil de administrador.
+- Ferramentas ausentes ou um erro genérico, sem evidência de autenticação, significam um problema de conexão: explique que é preciso verificar a instalação, a ativação do conector e o login. Não afirme que a pessoa está desconectada nem que o serviço está fora do ar sem evidência.
+- Aguarde a conclusão da autenticação e retome o pedido original usando as ferramentas. Não substitua a consulta por números da memória, não contorne permissões e não repita chamadas rejeitadas antes de resolver o acesso.
+
 ## 1. Banco do aplicativo LidIA (Postgres)
 
 Dados do produto: usuários, conversas, feedback, avaliações, projetos, documentos, eventos de auditoria do MCP e o _catálogo de metadados_ do BigQuery (`bigquery_tables`, `bigquery_columns`).
@@ -58,4 +73,6 @@ A única chave suportada entre as bases é o município: `users.municipality_id`
 
 As ferramentas de consulta devolvem um resumo de uma linha e `{ columns, rows }`, em que cada linha é um array de valores na ordem das colunas. O SQL enviado não volta na resposta, então mostre à pessoa o SQL que você usou quando isso ajudar a conferir o número.
 
-Ao apresentar: diga de qual fonte veio cada número, os filtros aplicados (contas internas, fuso, período) e as ressalvas. Não invente valores que as consultas não retornaram.
+Depois de consultar, quando um gráfico ajudar a visualizar comparações, tendências ou distribuições e o seu ambiente tiver ferramentas de visualização, tente gerar e mostrar um gráfico com os dados retornados. Associe cada valor de `rows` à posição correspondente em `columns`; preserve rótulos, unidades, períodos e dados ausentes. Não invente valores nem trate uma amostra ou um resultado limitado como o total da base. Se a ferramenta não estiver disponível ou a geração falhar, apresente uma tabela ou um resumo dos dados e continue com a explicação.
+
+Depois da visualização, explique os achados: diga de qual fonte veio cada número, os filtros aplicados (contas internas, fuso, período) e as ressalvas. Não invente valores que as consultas não retornaram. Compartilhe links de origem ou de conversa somente quando disponíveis no resultado; estas consultas SQL não criam uma conversa na LidIA nem retornam `conversationUrl`.

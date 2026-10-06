@@ -1,7 +1,7 @@
 {
   "name": "lidia-admin",
   "displayName": "LidIA Admin",
-  "version": "0.4.1",
+  "version": "0.4.3",
   "description": "Ferramentas de análise de dados da LidIA: banco do aplicativo e bases da educação brasileira, com SQL somente leitura. Requer conta de administrador da LidIA.",
   "author": {
     "name": "Centro Lemann",
